@@ -7,7 +7,9 @@
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
     <style>
-	
+		.icon{
+			max-width: 50px
+		}
     </style>
 </head>
 <body class="">
@@ -53,10 +55,46 @@
 				<button class="btn btn-light fs-2" onclick="clearDisplay()">&larr; Del</button>
 			</div>
 			<div class="col d-grid" style="min-height: 88px">
-				<button class="btn btn-light fs-2" onclick="addToDisplay(this)">.</button>
+				<button class="btn btn-light fs-2" onclick="addToDisplay(this)">0</button>
 			</div>
 			<div class="col d-grid" style="min-height: 88px">
-				<button class="btn btn-light fs-2">Enter &rarr;</button>
+				<button class="btn btn-light fs-2" onclick="addToDisplay(this)">.</button>
+			</div>
+		</div>
+	</div>
+    <div class="container-fluid">
+		<div class="row mt-2">
+			<div class="col d-grid" style="min-height: 88px">
+				<button class="btn btn-light fs-2" onclick="addToSpendType('food')">
+					<img src="./breakfast.png" class="icon" />
+				</button>
+			</div>
+			<div class="col d-grid" style="min-height: 88px">
+				<button class="btn btn-light fs-2" onclick="addToSpendType('food')">
+					<img src="./lunch.png" class="icon" />
+				</button>
+			</div>
+			<div class="col d-grid" style="min-height: 88px">
+				<button class="btn btn-light fs-2" onclick="addToSpendType('food')">
+					<img src="./dinner.png" class="icon" />
+				</button>
+			</div>
+		</div>
+		<div class="row mt-2 mb-5">
+			<div class="col d-grid" style="min-height: 88px">
+				<button class="btn btn-light fs-2" onclick="addToSpendType('food')">
+					<img src="./snack.png" class="icon" />
+				</button>
+			</div>
+			<div class="col d-grid" style="min-height: 88px">
+				<button class="btn btn-light fs-2" onclick="addToSpendType('food')">
+					<img src="./beverages.png" class="icon" />
+				</button>
+			</div>
+			<div class="col d-grid" style="min-height: 88px">
+				<button class="btn btn-light fs-2" onclick="addToSpendType('food')">
+					<img src="./grocery.png" class="icon" />
+				</button>
 			</div>
 		</div>
 	</div>
@@ -67,13 +105,17 @@
         function addToDisplay(component) {
 			var prevNumber = document.getElementById('display').innerHTML
 			document.getElementById('display').innerHTML += component.innerHTML
-			if(component.innerHTML != '.'){
-				try{
-					document.getElementById('display').innerHTML = eval(document.getElementById('display').innerHTML).toFixed(2);;
-				}catch(Exception){
-					document.getElementById('display').innerHTML = prevNumber.substring(0, prevNumber.length - 1)
-				}
-			}
+						
+			var t = document.getElementById('display').innerHTML;
+			document.getElementById('display').innerHTML = t.indexOf(".") >= 0 ? t.slice(0, t.indexOf(".") + 3) : t;
+			
+			// if(component.innerHTML != '.'){
+			// 	try{
+			// 		document.getElementById('display').innerHTML = eval(document.getElementById('display').innerHTML).toFixed(2);;
+			// 	}catch(Exception){
+			// 		document.getElementById('display').innerHTML = prevNumber.substring(0, prevNumber.length - 1)
+			// 	}
+			// }
         }
         
         function clearDisplay() {
