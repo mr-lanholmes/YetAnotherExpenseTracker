@@ -16,6 +16,12 @@
 </head>
 <body class="">
     <div class="container-fluid vh-100 d-flex" style="flex-direction: column">
+		<div class="row">
+			<input type="date" class="d-none" id="dateSelector" onChange="changeDate(this)" />
+			<div class="col fs-3 text-center text-middle my-auto" id="displayDate" onClick="document.getElementById('dateSelector').showPicker()">
+				0
+			</div>
+		</div>
 		<div class="row flex-fill">
 			<div class="col fs-1 text-center text-middle my-auto" id="display">0</div>
 		</div>
@@ -163,11 +169,48 @@
 			</div>
 		</div>
 	</div>
+    <!-- <div class="container-fluid mt-3 mb-3">
+		<div class="row mb-5">
+			<div class="col">
+				<table class="table">
+					<thead>
+					  <tr>
+						<th scope="col">#</th>
+						<th scope="col">First</th>
+						<th scope="col">Last</th>
+						<th scope="col">Handle</th>
+					  </tr>
+					</thead>
+					<tbody id="tblBody">
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div> -->
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <script>
+
+		var spendTypes = [ ];
+		let itemsArray = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [ ];
+
+		function changeDate(component){
+			document.getElementById("displayDate").innerHTML = component.value
+		}
+
+		function refreshDisplayDate(){
+			document.getElementById("displayDate").innerHTML = new Date()
+		}
+		refreshDisplayDate();
+
+		function resetForm(){
+			refreshDisplayDate();
+			document.getElementById("display").innerHTML = 0;
+			// Loop through buttons and aria-pressed if true set false
+		}
+
         function addToDisplay(component) {
 			var prevNumber = document.getElementById('display').innerHTML
 			if(prevNumber=='0'){
@@ -187,8 +230,6 @@
 			// 	}
 			// }
         }
-
-		var spendTypes = [ ];
 
 		function addToSpendType(component, name){
 			document.getElementById('final_numeric').innerHTML = document.getElementById('display').innerHTML
@@ -215,11 +256,11 @@
 				text: 'Submitted',
 			})
 			
-			let itemsArray = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [ ];
-
 			itemsArray.push({
 				expenseValue: document.getElementById('display').innerHTML,
 				expenseTypes: spendTypes,
+				expenseDate: document.getElementById("displayDate").innerHTML,
+				expenseInputDateTime: new Date(),
 				expenseNotes: document.getElementById('expenseNotes').value,
 			})
 
