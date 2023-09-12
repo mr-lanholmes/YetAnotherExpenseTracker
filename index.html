@@ -192,7 +192,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <script>
-
+		var lcy = "S$"
 		var spendTypes = [ ];
 		let itemsArray = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [ ];
 
@@ -232,7 +232,7 @@
         }
 
 		function addToSpendType(component, name){
-			document.getElementById('final_numeric').innerHTML = document.getElementById('display').innerHTML
+			document.getElementById('final_numeric').innerHTML = lcy + " " + document.getElementById('display').innerHTML
 			
 			if(component.getAttribute('aria-pressed') == "true"){
 				spendTypes.push(name.toUpperCase())
