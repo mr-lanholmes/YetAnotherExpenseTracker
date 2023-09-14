@@ -44,8 +44,8 @@
 					<thead>
 					  <tr>
 						<th class="col-2" scope="col">#</th>
-						<th class="col-1" scope="col">First</th>
-						<th class="col-3" scope="col">Last</th>
+						<th class="col-2" scope="col">First</th>
+						<th class="col" scope="col">Last</th>
 						<th class="col" scope="col"></th>
 					  </tr>
 					</thead>
@@ -79,23 +79,13 @@
         itemsArray.forEach(element => {
             let _tmp = ""
 
+            // `My name is ${name}. I am ${age} years old. I live in ${city}.`;
+
             _tmp += "<tr>"
-            _tmp += "<td>"
-            _tmp += element.expenseDate
-            _tmp += "</td>"
-            _tmp += "<td>"
-            _tmp += lcy + " " + element.expenseValue
-            _tmp += "</td>"
-            _tmp += "<td>"
-            _tmp += element.expenseTypes.join(", ")
-            _tmp += "<br>"
-            _tmp += element.expenseNotes
-            _tmp += "</td>"
-            _tmp += "<td>"
-            _tmp += element.expenseInputDateTime
-            _tmp += "<br>"
-            _tmp += "<button type='button' class='btn btn-danger'>X</button>"
-            _tmp += "</td>"
+            _tmp += `<td>${element.expenseDate}</td>`
+            _tmp += `<td>${lcy} ${element.expenseValue}</td>`
+            _tmp += `<td>${element.expenseTypes.join(", ")}<br>${element.expenseNotes}</td>`
+            _tmp += `<td>${element.expenseInputDateTime}<br><button type='button' class='btn btn-danger'>X</button></td>`
             _tmp += "</tr>"
 
 			document.getElementById("tblBody").innerHTML += _tmp
