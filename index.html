@@ -14,7 +14,7 @@
 		}
     </style>
 </head>
-<body class="">
+<body id="mainBody" class="">
     <div class="container-fluid vh-100 d-flex" style="flex-direction: column">
 		<div class="row mt-5">
 			<input type="date" class="d-none" id="dateSelector" onChange="changeDate(this)" />
@@ -223,7 +223,7 @@
 			var currYear = d.getFullYear();
 			var dateStr = currYear + "-" + currMonth + "-" + currDate;
 			document.getElementById("dateSelector").valueAsDate = d
-			document.getElementById("displayDate").innerHTML = moment(document.getElementById("dateSelector").valueAsDate).format('DD MMM YYYY');
+			document.getElementById("displayDate").innerHTML = moment(document.getElementById("dateSelector").valueAsDate).format('dddd, DD MMM YYYY');
 		}
 		setDate(new Date());
 
@@ -264,24 +264,17 @@
 
 		function resetForm(){
 			document.getElementById("display").innerHTML = "0";
-			document.getElementById('final_numeric').value = lcy + " " + document.getElementById('display').innerHTML;
-			document.getElementById('final_spend_types').value = "";
+			document.getElementById('final_numeric').innerHTML = lcy + " 0";
+			document.getElementById('final_spend_types').innerHTML = "";
 			document.getElementById('expenseNotes').value = "";
 			
 			// Loop through buttons and aria-pressed if true set false
 
-			document.body.scrollTop = 0; // For Safari
-			document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+			// document.body.scrollTop = 0; // For Safari
+			// document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 		}
 
 		function submitSpending(){
-			Swal.fire({
-				icon: 'success',
-				title: 'OK',
-				text: 'Submitted',
-			}).then(() => {
-				resetForm()
-			})
 			
 			itemsArray.push({
 				expenseValue: document.getElementById('display').innerHTML,
@@ -292,6 +285,17 @@
 			})
 
   			localStorage.setItem('items', JSON.stringify(itemsArray));
+
+			document.getElementById("mainBody").scrollIntoView(true);
+			document.getElementById("mainBody").focus()
+				resetForm()
+
+			// Swal.fire({
+			// 	icon: 'success',
+			// 	title: 'OK',
+			// 	text: 'Submitted',
+			// }).then(() => {
+			// })
 
 		}
 		
