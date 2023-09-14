@@ -268,7 +268,17 @@
 			document.getElementById('final_spend_types').innerHTML = "";
 			document.getElementById('expenseNotes').value = "";
 			
-			// Loop through buttons and aria-pressed if true set false
+			var buttons = document.querySelectorAll('.btn');
+
+			// Loop through each button
+			buttons.forEach(function(button) {
+			// Check if the button has the 'active' class (Bootstrap's class for a pressed button)
+			if (button.classList.contains('active')) {
+				// If it has the 'active' class, set the "aria-pressed" attribute to "false"
+				button.setAttribute('aria-pressed', 'false');
+				button.classList.remove('active')
+			}
+			});
 
 			// document.body.scrollTop = 0; // For Safari
 			// document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
