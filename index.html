@@ -13,6 +13,11 @@
 			max-width: 50px
 		}
     </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/idb@5.0.2/build/iife/index-min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/object-hash@3.0.0/dist/object_hash.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js" integrity="sha256-qXBd/EfAdjOA2FGrGAG+b3YBn2tn5A6bhz+LSgYD96k=" crossorigin="anonymous"></script>
+	<script src="./script.js"></script>
 </head>
 <body id="mainBody" class="">
     <div class="container-fluid vh-100 d-flex" style="flex-direction: column">
@@ -182,11 +187,11 @@
     <div class="container-fluid mt-2">
 		<div class="row mb-5">
 			<div class="col d-grid text-center" style="min-height: 88px">
-				<button class="btn btn-success fs-2" onclick="submitSpending()">
+				<button class="btn btn-success fs-2" onclick="addExpenses()">
 					<img src="./submit.png" class="icon" />
 				</button>
 				<br>
-				<a class="link-opacity-100 fs-4 m-3 mb-5 link-underline link-underline-opacity-0" href="/list.html">See past data</a>
+				<a class="link-opacity-100 fs-4 m-3 mb-5 link-underline link-underline-opacity-0" href="/list.html">Historical data</a>
 			</div>
 		</div>
 	</div>
@@ -196,10 +201,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
     
     <script>
-		var lcy = "S$"
 		var spendTypes = [ ];
 		let itemsArray = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [ ];
-		
 		
 		function setDate(d){
 			var currDate = d.getDate();
@@ -225,7 +228,8 @@
 						
 			var t = document.getElementById('display').innerHTML;
 			document.getElementById('display').innerHTML = t.indexOf(".") >= 0 ? t.slice(0, t.indexOf(".") + 3) : t;
-			
+
+			document.getElementById('final_numeric').innerHTML = lcy + " " + document.getElementById('display').innerHTML
         }
 
 		function addToSpendType(component, name){
@@ -245,50 +249,7 @@
 				document.getElementById('display').innerHTML = prevNumber.substring(0, prevNumber.length - 1)
 			}
 		}
-
-		function resetForm(){
-			document.getElementById("display").innerHTML = "0";
-			document.getElementById('final_numeric').innerHTML = lcy + " 0";
-			document.getElementById('final_spend_types').innerHTML = "";
-			document.getElementById('expenseNotes').value = "";
-
-			spendTypes = [ ]
-			
-			var buttons = document.querySelectorAll('.btn');
-			
-			buttons.forEach(function(button) {
-				if (button.classList.contains('active')) {
-					button.setAttribute('aria-pressed', 'false');
-					button.classList.remove('active')
-				}
-			});
-		}
-
-		function submitSpending(){
-			
-			itemsArray.push({
-				expenseValue: document.getElementById('display').innerHTML,
-				expenseTypes: spendTypes,
-				expenseDate: document.getElementById("displayDate").innerHTML,
-				expenseInputDateTime: new Date(),
-				expenseNotes: document.getElementById('expenseNotes').value,
-			})
-
-  			localStorage.setItem('items', JSON.stringify(itemsArray));
-
-			document.getElementById("mainBody").scrollIntoView(true);
-			document.getElementById("mainBody").focus()
-				resetForm()
-
-			// Swal.fire({
-			// 	icon: 'success',
-			// 	title: 'OK',
-			// 	text: 'Submitted',
-			// }).then(() => {
-			// })
-
-		}
-		
+				
     </script>
 </body>
 </html>

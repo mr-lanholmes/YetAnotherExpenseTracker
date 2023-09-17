@@ -7,6 +7,11 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/idb@5.0.2/build/iife/index-min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/object-hash@3.0.0/dist/object_hash.min.js"></script>
+  	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js" integrity="sha256-qXBd/EfAdjOA2FGrGAG+b3YBn2tn5A6bhz+LSgYD96k=" crossorigin="anonymous"></script>
+	  <script src="./script.js"></script>
   </head>
   <body>
     <div class="container-fluid mt-3">
@@ -25,14 +30,9 @@
     </div>
     <div class="container-fluid mt-2">
 		<div class="row">
-			<div class="col d-grid text-center">
-				<button class="btn btn-success">
+			<div class="col">
+				<button class="btn btn-info" onClick="downloadJSON()">
 					Download as JSON
-				</button>
-			</div>
-			<div class="col d-grid text-center">
-				<button class="btn btn-success">
-					Download as CSV
 				</button>
 			</div>
 		</div>
@@ -59,7 +59,7 @@
     <div class="container-fluid mt-2 mb-5">
         <div class="row">
 			<div class="col d-grid text-center">
-				<button class="btn btn-danger">
+				<button class="btn btn-danger" onclick="resetDatabase()">
 					Reset Data
 				</button>
 			</div>
@@ -67,30 +67,10 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
-
+	  <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    
     <script>
-		var lcy = "S$"
-		var spendTypes = [ ];
-		let itemsArray = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [ ];
-
-        itemsArray.reverse()
-
-        itemsArray.forEach(element => {
-            let _tmp = ""
-
-            // `My name is ${name}. I am ${age} years old. I live in ${city}.`;
-
-            _tmp += "<tr>"
-            _tmp += `<td>${element.expenseDate}</td>`
-            _tmp += `<td>${lcy} ${element.expenseValue}</td>`
-            _tmp += `<td>${element.expenseTypes.join(", ")}<br>${element.expenseNotes}</td>`
-            _tmp += `<td>${element.expenseInputDateTime}<br><button type='button' class='btn btn-danger'>X</button></td>`
-            _tmp += "</tr>"
-
-			document.getElementById("tblBody").innerHTML += _tmp
-        });
-
+      displayTasks()
     </script>
   </body>
 </html>
