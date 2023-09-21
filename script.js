@@ -29,8 +29,30 @@ function displayTasks() {
             // to get a value that is either negative, positive, or zero.
             return new Date(b.expenseInputDateTime) - new Date(a.expenseInputDateTime);
         });
+
+        var ytdValue = 0;
+        var mtdValue = 0;
+        var dailyValue = 0;
+
+        var today = new Date()
+        var todayDd = String(today.getDate()).padStart(2, '0');
+        var todayMm = String(today.getMonth() + 1).padStart(2, '0');
+        var todayYyyy = today.getFullYear();
+        var todayStr =  todayDd + '/' + todayMm + '/' + todayYyyy;
+        console.log(today, todayStr, todayDd,todayMm, todayYyyy)
         
         expenses.forEach(element => {
+            console.log(element)
+            var expenseDate = new Date(element.expenseDate)
+            var expenseDateStr =  String(expenseDate.getDate()).padStart(2, '0') + '/' + String(expenseDate.getMonth() + 1).padStart(2, '0') + '/' + expenseDate.getFullYear();
+            console.log(expenseDateStr, element.expenseDate, expenseDate)
+            
+            console.log("parseFloat(element.expenseValue).toFixed(2)", element.expenseValue, parseFloat(element.expenseValue))
+
+            if(expenseDateStr == todayStr){ dailyValue += parseFloat(element.expenseValue) }
+            if(todayMm == String(expenseDate.getMonth() + 1).padStart(2, '0')){ mtdValue += parseFloat(element.expenseValue) }
+            if(todayYyyy == expenseDate.getFullYear()){ ytdValue += parseFloat(element.expenseValue) }
+
             let _tmp = ""
             _tmp += "<tr>"
             _tmp += `<td>${element.expenseDate}</td>`
@@ -41,6 +63,12 @@ function displayTasks() {
             _tmp += "</tr>"
             document.getElementById("tblBody").innerHTML += _tmp
         });
+
+        console.log("ytdValue, mtdValue, dailyValue", ytdValue, mtdValue, dailyValue)
+
+        document.getElementById("ytdValue").innerHTML   = lcy + ytdValue.toFixed(2)
+        document.getElementById("mtdValue").innerHTML   = lcy + mtdValue.toFixed(2)
+        document.getElementById("dailyValue").innerHTML = lcy + dailyValue.toFixed(2)
     });
 }
 
