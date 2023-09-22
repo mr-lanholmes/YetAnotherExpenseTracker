@@ -35,6 +35,12 @@
 					Download as JSON
 				</button>
 			</div>
+			<div class="col">
+        <input type="file" id="fileUpload" class="d-none" accept="text/json" />
+				<button class="btn btn-info" onClick="document.getElementById('fileUpload').click()">
+					Load JSON
+				</button>
+			</div>
 		</div>
 	</div>
   <div class="container-fluid mt-2 mb-5">
@@ -89,6 +95,59 @@
     
     <script>
       displayTasks()
+
+      document.getElementById("fileUpload").addEventListener("change", function (event) {
+          const selectedFile = event.target.files[0];
+
+          console.log("selectedFileevent")
+          if (selectedFile) {
+              console.log("selectedFile")
+
+              resetDatabase()
+
+              const reader = new FileReader();
+              reader.onload = function (e) {
+                  const jsonData = JSON.parse(e.target.result);
+                  
+                  const request = indexedDB.open(dbName, 1);
+                  console.log("reader.onload")
+
+                  request.onerror = function(event) {
+                      console.error("Database error: " + event.target.errorCode);
+                  };
+
+                  request.onsuccess = function(event) {
+                      const db = event.target.result;
+                      
+                      const transaction = db.transaction([dbStoreName], "readwrite");
+                      const objectStore = transaction.objectStore(dbStoreName);
+                      
+                      jsonData.forEach(item => {
+                          objectStore.add(item);
+                      });
+                      console.log("reader.onsuccess")
+                      
+                      transaction.oncomplete = function() {
+                          db.close();
+                          console.log("JSON data has been stored in IndexedDB.");
+                          displayTasks()
+                      };
+                  };
+
+                  request.onupgradeneeded = function(event) {
+                      const db = event.target.result;
+                      const objectStore = db.createObjectStore(dbStoreName, { keyPath: "id" });
+                      
+                      objectStore.createIndex("_id", "_id", { unique: true });
+                      console.log("reader.onupgradeneeded")
+                      
+                      console.log("Database setup complete.");
+                  };
+              };
+
+              reader.readAsText(selectedFile);
+          }
+      });
     </script>
   </body>
 </html>
