@@ -71,7 +71,9 @@ function displayTasks() {
             _tmp += `<td>${lcy} ${element.expenseValue}</td>`
             _tmp += `<td>${element.expenseTypes.join(", ")}<br>${element.expenseNotes}</td>`
             _tmp += `<td>${element.expenseInputDateTime}<br>`
-            _tmp += `<button type='button' id='btn_del_${element._id}' class='btn btn-danger' onclick='removeExpense(this)'>X</button></td>`
+            _tmp += `<button type='button' id='btn_del_${element._id}' class='btn btn-secondary' onclick='removeExpenseCfm(this)'>X</button>`
+            _tmp += `&nbsp;&nbsp;<button type='button' id='btn_del_cfm_${element._id}' class='btn btn-danger d-none' onclick='removeExpense(this)'>&check;</button>`
+            _tmp += `</td>`
             _tmp += "</tr>"
             document.getElementById("tblBody").innerHTML += _tmp
         });
@@ -118,6 +120,14 @@ function addExpenses() {
     }).then(() => {
         resetForm()
     });
+}
+
+function removeExpenseCfm(element) {
+    if(document.getElementById("btn_del_cfm_"+element.id.substr(8)).classList.contains("d-none")){
+        document.getElementById("btn_del_cfm_"+element.id.substr(8)).classList.remove("d-none")
+    }else{
+        document.getElementById("btn_del_cfm_"+element.id.substr(8)).classList.add("d-none")
+    }
 }
 
 function removeExpense(element) {
