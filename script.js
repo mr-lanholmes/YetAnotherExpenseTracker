@@ -15,6 +15,10 @@ const dbPromise = idb.openDB(dbName, 1, {
     },
 });
 
+let yearlyList = [ ]
+let monthlyList = [ ]
+let dailyList = [ ]
+
 function displayTasks() {
     document.getElementById("tblBody").innerHTML = ""
 
@@ -23,7 +27,6 @@ function displayTasks() {
         const store = tx.objectStore(dbStoreName);
         return store.getAll();
     }).then(expenses => {
-        console.log(expenses)
         expenses.sort(function(a,b){
             // Turn your strings into dates, and then subtract them
             // to get a value that is either negative, positive, or zero.
@@ -39,19 +42,28 @@ function displayTasks() {
         var todayMm = String(today.getMonth() + 1).padStart(2, '0');
         var todayYyyy = today.getFullYear();
         var todayStr =  todayDd + '/' + todayMm + '/' + todayYyyy;
-        console.log(today, todayStr, todayDd,todayMm, todayYyyy)
         
         expenses.forEach(element => {
-            console.log(element)
             var expenseDate = new Date(element.expenseDate)
             var expenseDateStr =  String(expenseDate.getDate()).padStart(2, '0') + '/' + String(expenseDate.getMonth() + 1).padStart(2, '0') + '/' + expenseDate.getFullYear();
-            console.log(expenseDateStr, element.expenseDate, expenseDate)
-            
-            console.log("parseFloat(element.expenseValue).toFixed(2)", element.expenseValue, parseFloat(element.expenseValue))
 
-            if(expenseDateStr == todayStr){ dailyValue += parseFloat(element.expenseValue) }
-            if(todayMm == String(expenseDate.getMonth() + 1).padStart(2, '0')){ mtdValue += parseFloat(element.expenseValue) }
-            if(todayYyyy == expenseDate.getFullYear()){ ytdValue += parseFloat(element.expenseValue) }
+            if(expenseDateStr == todayStr){ 
+                dailyValue += parseFloat(element.expenseValue) 
+            }
+            if(todayMm == String(expenseDate.getMonth() + 1).padStart(2, '0')){ 
+                mtdValue += parseFloat(element.expenseValue) 
+                dailyList.push({
+                    label: expenseDateStr.substr(0, 2),
+                    dataValue: parseFloat(element.expenseValue)
+                })
+            }
+            if(todayYyyy == expenseDate.getFullYear()){ 
+                ytdValue += parseFloat(element.expenseValue)
+                monthlyList.push({
+                    label: expenseDateStr.substr(3),
+                    dataValue: parseFloat(element.expenseValue)
+                })
+            }
 
             let _tmp = ""
             _tmp += "<tr>"
@@ -63,8 +75,6 @@ function displayTasks() {
             _tmp += "</tr>"
             document.getElementById("tblBody").innerHTML += _tmp
         });
-
-        console.log("ytdValue, mtdValue, dailyValue", ytdValue, mtdValue, dailyValue)
 
         document.getElementById("ytdValue").innerHTML   = lcy + ytdValue.toFixed(2)
         document.getElementById("mtdValue").innerHTML   = lcy + mtdValue.toFixed(2)
@@ -114,7 +124,6 @@ function removeExpense(element) {
     dbPromise.then(db => {
         const tx = db.transaction(dbStoreName, 'readwrite');
         const store = tx.objectStore(dbStoreName);
-        console.log(element.id, element.id.substr(8))
         store.delete(element.id.substr(8));
         return tx.complete;
     }).then(() => {
@@ -162,4 +171,32 @@ function resetDatabase() {
     }).then(() => {
         displayTasks();
     });
+}
+
+function showDailyExpensesChart(){
+    let ans = _(dailyList)
+        .groupBy('label')
+        .map((dataRow, id) => ({
+            label: id,
+            sumValue: _.sumBy(dataRow, 'dataValue'),
+        }))
+        .value()
+
+    ctx.data.labels = _.map(ans, 'label');
+    ctx.data.datasets[0].data =  _.map(ans, 'sumValue');
+
+    ctx.update();
+}
+
+function showExpenseChart(){
+    if(document.getElementById('expenseChart').classList.contains("d-none")){
+        new Promise((resolve,) => {
+            showDailyExpensesChart()
+            resolve();
+        }).then((resolveValue) => {   
+            document.getElementById('expenseChart').classList.remove("d-none")
+        })
+    }else{
+        document.getElementById('expenseChart').classList.add("d-none")
+    }
 }
