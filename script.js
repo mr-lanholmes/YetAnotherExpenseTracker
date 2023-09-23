@@ -174,13 +174,22 @@ function downloadCSV() {
 }
 
 function resetDatabase() {
-    dbPromise.then(db => {
-        const tx = db.transaction(dbStoreName, 'readwrite');
-        const store = tx.objectStore(dbStoreName);
-        return store.clear();
-    }).then(() => {
-        displayTasks();
-    });
+    Swal.fire({
+        title: 'Proceed to reset database? Ensure you have download your data',
+        showDenyButton: true,
+        confirmButtonText: 'Yes, reset Database',
+        denyButtonText: `No, thanks`,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            dbPromise.then(db => {
+                const tx = db.transaction(dbStoreName, 'readwrite');
+                const store = tx.objectStore(dbStoreName);
+                return store.clear();
+            }).then(() => {
+                displayTasks();
+            });
+        }
+    })
 }
 
 function showDailyExpensesChart(){
