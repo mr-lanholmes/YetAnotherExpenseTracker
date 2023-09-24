@@ -91,6 +91,7 @@ function displayTasks() {
                 sumValue: _.sumBy(dataRow, 'dataValue'),
             })).value()
 
+        document.getElementById("dailyValuePct").innerHTML = (dailyValue/dailySpendLimit*100).toFixed(0) + "%"
         if(dailyValue <= 0){
             
         }else if(dailyValue <= (dailySpendLimit * 0.8)){
@@ -100,12 +101,14 @@ function displayTasks() {
             document.getElementById("dailyValBox").classList.add("bg-warning")
             document.getElementById("dailyValBox").classList.add("text-white")
         }else{
-            document.getElementById("dailyValBox").classList.add("bg-danger ")
+            document.getElementById("dailyValBox").classList.add("bg-danger")
             document.getElementById("dailyValBox").classList.add("text-white")
         }
 
 
         let mtdDailyValAvg = mtdValue / dailyListGroup.length;
+        console.log(mtdDailyValAvg)
+        document.getElementById("mtdValuePct").innerHTML = (mtdDailyValAvg/dailySpendLimit*100).toFixed(0) + "%"
         if(mtdDailyValAvg <= 0){
             
         }else if(mtdDailyValAvg <= (dailySpendLimit * 0.8)){
@@ -115,7 +118,7 @@ function displayTasks() {
             document.getElementById("mtdValBox").classList.add("bg-warning")
             document.getElementById("mtdValBox").classList.add("text-white")
         }else{
-            document.getElementById("mtdValBox").classList.add("bg-danger ")
+            document.getElementById("mtdValBox").classList.add("bg-danger")
             document.getElementById("mtdValBox").classList.add("text-white")
         }
     });
