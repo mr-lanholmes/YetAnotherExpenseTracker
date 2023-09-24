@@ -45,17 +45,17 @@
 	</div>
   <div class="container-fluid mt-2 mb-5">
       <div class="row">
-        <div class="col d-grid text-center fs-3">
+        <div class="col d-grid text-center fs-3 rounded" id="ytdValBox">
           <span class="fs-2 fw-bold">YTD</span>
           <span id="ytdValue">S$0</span>
         </div>
         
-        <div class="col d-grid text-center fs-3">
+        <div class="col d-grid text-center fs-3 rounded mx-3" id="mtdValBox">
           <span class="fs-2 fw-bold">MTD</span>
           <span id="mtdValue">S$0</span>
         </div>
         
-        <div class="col d-grid text-center fs-3" onClick="showExpenseChart()">
+        <div class="col d-grid text-center fs-3 rounded" onClick="showExpenseChart()" id="dailyValBox">
           <span class="fs-2 fw-bold">Daily</span>
           <span id="dailyValue">S$0</span>
         </div>
@@ -131,8 +131,8 @@
               annotations: {
                 line: {
                   type: 'line',
-                  yMin: 45,
-                  yMax: 45,
+                  yMin: dailySpendLimit,
+                  yMax: dailySpendLimit,
                   borderWidth: 2,
                   borderColor: 'red'
                 }

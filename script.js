@@ -1,5 +1,7 @@
 var lcy = "S$"
 
+const dailySpendLimit = 45;
+
 const dbName = "YAET"
 const dbStoreName = "expenses"
 
@@ -18,6 +20,8 @@ const dbPromise = idb.openDB(dbName, 1, {
 let yearlyList = [ ]
 let monthlyList = [ ]
 let dailyList = [ ]
+
+let dailyListGroup = [ ]
 
 function displayTasks() {
     document.getElementById("tblBody").innerHTML = ""
@@ -81,6 +85,39 @@ function displayTasks() {
         document.getElementById("ytdValue").innerHTML   = lcy + ytdValue.toFixed(2)
         document.getElementById("mtdValue").innerHTML   = lcy + mtdValue.toFixed(2)
         document.getElementById("dailyValue").innerHTML = lcy + dailyValue.toFixed(2)
+
+        dailyListGroup = _(dailyList).groupBy('label').map((dataRow, id) => ({
+                label: id,
+                sumValue: _.sumBy(dataRow, 'dataValue'),
+            })).value()
+
+        if(dailyValue <= 0){
+            
+        }else if(dailyValue <= (dailySpendLimit * 0.8)){
+            document.getElementById("dailyValBox").classList.add("bg-success")
+            document.getElementById("dailyValBox").classList.add("text-white")
+        }else if(dailyValue <= (dailySpendLimit)){
+            document.getElementById("dailyValBox").classList.add("bg-warning")
+            document.getElementById("dailyValBox").classList.add("text-white")
+        }else{
+            document.getElementById("dailyValBox").classList.add("bg-danger ")
+            document.getElementById("dailyValBox").classList.add("text-white")
+        }
+
+
+        let mtdDailyValAvg = mtdValue / dailyListGroup.length;
+        if(mtdDailyValAvg <= 0){
+            
+        }else if(mtdDailyValAvg <= (dailySpendLimit * 0.8)){
+            document.getElementById("mtdValBox").classList.add("bg-success")
+            document.getElementById("mtdValBox").classList.add("text-white")
+        }else if(mtdDailyValAvg <= (dailySpendLimit)){
+            document.getElementById("mtdValBox").classList.add("bg-warning")
+            document.getElementById("mtdValBox").classList.add("text-white")
+        }else{
+            document.getElementById("mtdValBox").classList.add("bg-danger ")
+            document.getElementById("mtdValBox").classList.add("text-white")
+        }
     });
 }
 
@@ -193,16 +230,8 @@ function resetDatabase() {
 }
 
 function showDailyExpensesChart(){
-    let ans = _(dailyList)
-        .groupBy('label')
-        .map((dataRow, id) => ({
-            label: id,
-            sumValue: _.sumBy(dataRow, 'dataValue'),
-        }))
-        .value()
-
-    ctx.data.labels = _.map(ans, 'label');
-    ctx.data.datasets[0].data =  _.map(ans, 'sumValue');
+    ctx.data.labels = _.map(dailyListGroup, 'label');
+    ctx.data.datasets[0].data =  _.map(dailyListGroup, 'sumValue');
 
     ctx.update();
 }
