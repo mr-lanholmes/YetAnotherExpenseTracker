@@ -174,7 +174,7 @@ function removeExpense(element) {
     dbPromise.then(db => {
         const tx = db.transaction(dbStoreName, 'readwrite');
         const store = tx.objectStore(dbStoreName);
-        store.delete(element.id.substr(8));
+        store.delete(element.id.substr(12));
         return tx.complete;
     }).then(() => {
         displayTasks();
