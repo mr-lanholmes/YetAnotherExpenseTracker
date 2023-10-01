@@ -21,6 +21,7 @@ let yearlyList = [ ]
 let monthlyList = [ ]
 let dailyList = [ ]
 
+let monthlyListGroup = [ ]
 let dailyListGroup = [ ]
 
 function displayTasks() {
@@ -86,6 +87,11 @@ function displayTasks() {
         document.getElementById("mtdValue").innerHTML   = lcy + mtdValue.toFixed(2)
         document.getElementById("dailyValue").innerHTML = lcy + dailyValue.toFixed(2)
 
+        monthlyListGroup= _(monthlyList).groupBy('label').map((dataRow, id) => ({
+            label: id,
+            sumValue: _.sumBy(dataRow, 'dataValue'),
+        })).value()
+
         dailyListGroup = _(dailyList).groupBy('label').map((dataRow, id) => ({
                 label: id,
                 sumValue: _.sumBy(dataRow, 'dataValue'),
@@ -107,7 +113,7 @@ function displayTasks() {
 
 
         let mtdDailyValAvg = mtdValue / dailyListGroup.length;
-        console.log(mtdDailyValAvg)
+        // console.log(mtdDailyValAvg)
         document.getElementById("mtdValuePct").innerHTML = (mtdDailyValAvg/dailySpendLimit*100).toFixed(0) + "%"
         if(mtdDailyValAvg <= 0){
             
@@ -235,15 +241,27 @@ function resetDatabase() {
 function showDailyExpensesChart(){
     ctx.data.labels = _.map(dailyListGroup, 'label');
     ctx.data.datasets[0].data =  _.map(dailyListGroup, 'sumValue');
-
     ctx.update();
 }
 
-function showExpenseChart(){
+function showMonthlyExpensesChart(){
+    monthlyListGroup = monthlyListGroup.reverse()
+    ctx.data.labels = _.map(monthlyListGroup, 'label');
+    ctx.data.datasets[0].data =  _.map(monthlyListGroup, 'sumValue');
+    ctx.update();
+}
+
+function showExpenseChart(chartType){
     if(document.getElementById('expenseChart').classList.contains("d-none")){
         new Promise((resolve,) => {
-            showDailyExpensesChart()
-            resolve();
+            if(chartType == 1){
+                showDailyExpensesChart()
+                resolve();
+            }
+            if(chartType == 2){
+                showMonthlyExpensesChart()
+                resolve();
+            }
         }).then((resolveValue) => {   
             document.getElementById('expenseChart').classList.remove("d-none")
         })
