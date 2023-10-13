@@ -241,13 +241,13 @@ function resetDatabase() {
 function showDailyExpensesChart(){
     dailyListGroup = dailyListGroup.sort((a, b) => {
         if (a.label < b.label) {
-          return -1;
+            return -1;
         }
         if (a.label > b.label) {
-          return 1;
+            return 1;
         }
         return 0;
-      });
+    });
     ctx.data.labels = _.map(dailyListGroup, 'label');
     ctx.data.datasets[0].data =  _.map(dailyListGroup, 'sumValue');
     ctx.update();
@@ -256,13 +256,13 @@ function showDailyExpensesChart(){
 function showMonthlyExpensesChart(){
     monthlyListGroup = monthlyListGroup.sort((a, b) => {
         if (a.label < b.label) {
-          return -1;
+            return -1;
         }
         if (a.label > b.label) {
-          return 1;
+            return 1;
         }
         return 0;
-      });
+    });
     ctx.data.labels = _.map(monthlyListGroup, 'label');
     ctx.data.datasets[0].data =  _.map(monthlyListGroup, 'sumValue');
     ctx.update();
