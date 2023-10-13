@@ -239,6 +239,7 @@ function resetDatabase() {
 }
 
 function showDailyExpensesChart(){
+    dailyListGroup = dailyListGroup.reverse()
     ctx.data.labels = _.map(dailyListGroup, 'label');
     ctx.data.datasets[0].data =  _.map(dailyListGroup, 'sumValue');
     ctx.update();
