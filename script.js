@@ -153,7 +153,7 @@ function addExpenses(multiplier=1) {
         const tx = db.transaction(dbStoreName, 'readwrite');
         const store = tx.objectStore(dbStoreName);
         var _expense_entry = {
-            expenseValue: document.getElementById('display').innerHTML,
+            expenseValue: (parseFloat(document.getElementById('display').innerHTML)*multiplier).toString(),
             expenseTypes: spendTypes,
             expenseDate: document.getElementById("displayDate").innerHTML,
             expenseInputDateTime: new Date(),
