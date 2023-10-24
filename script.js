@@ -148,7 +148,7 @@ function resetForm(){
     });
 }
 
-function addExpenses(multiplier) {    
+function addExpenses(multiplier=1) {    
     dbPromise.then(db => {
         const tx = db.transaction(dbStoreName, 'readwrite');
         const store = tx.objectStore(dbStoreName);
