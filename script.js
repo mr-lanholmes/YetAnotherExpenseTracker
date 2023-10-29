@@ -187,6 +187,41 @@ function removeExpense(element) {
     });
 }
 
+function searchByKeyword(element){
+    document.getElementById("tblBody").innerHTML = ""
+
+    dbPromise.then(db => {
+        const tx = db.transaction(dbStoreName, 'readonly');
+        const store = tx.objectStore(dbStoreName);
+        return store.getAll();
+    }).then(expenses => {
+        expenses.sort(function(a,b){
+            // Turn your strings into dates, and then subtract them
+            // to get a value that is either negative, positive, or zero.
+            return new Date(b.expenseInputDateTime) - new Date(a.expenseInputDateTime);
+        });
+
+        const filteredObjects = expenses.filter(obj => {
+            let fullStr = (obj.expenseTypes.join(", ") + " " + obj.expenseNotes).toUpperCase()
+            return fullStr.includes(element.value.toUpperCase())
+        });
+        
+        filteredObjects.forEach(element => {            
+            let _tmp = ""
+            _tmp += "<tr>"
+            _tmp += `<td>${element.expenseDate}</td>`
+            _tmp += `<td>${lcy} ${element.expenseValue}</td>`
+            _tmp += `<td>${element.expenseTypes.join(", ")}<br>${element.expenseNotes}</td>`
+            _tmp += `<td>${element.expenseInputDateTime}<br>`
+            _tmp += `<button type='button' id='btn_del_${element._id}' class='btn btn-secondary' onclick='removeExpenseCfm(this)'>X</button>`
+            _tmp += `&nbsp;&nbsp;<button type='button' id='btn_del_cfm_${element._id}' class='btn btn-danger d-none' onclick='removeExpense(this)'>&check;</button>`
+            _tmp += `</td>`
+            _tmp += "</tr>"
+            document.getElementById("tblBody").innerHTML += _tmp
+        });
+    });
+}
+
 function downloadJSON() {
     dbPromise.then(db => {
         const tx = db.transaction(dbStoreName, 'readonly');
