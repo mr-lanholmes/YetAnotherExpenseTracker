@@ -69,37 +69,42 @@
         </div>
       </div>
   </div>
-  <div class="container-fluid mt-2 mb-5">
-        <div class="col text-center" style="max-height: 200px">
-          <a class="link-opacity-100 fs-4 m-3 mb-5 link-underline link-underline-opacity-0" href="search.html">Search</a>
-        </div>
+  <div class="container-fluid mt-2 mb-5 fs-4">
+    <div class="row">
+        <div class="col text-center">
+        <a class="link-opacity-100 link-underline link-underline-opacity-0" href="adv_search.html">Advanced Search</a>
       </div>
+      <div class="col text-center">
+        <a class="link-opacity-100 link-underline link-underline-opacity-0" href="search.html">Search</a>
+      </div>
+    </div>
+  </div>
   </div>
     <div class="container-fluid mt-2">
         <div class="row mt-3">
             <div class="col table-responsive">
-				<table class="table table-striped">
-					<thead>
-					  <tr>
-						<th class="col-2" scope="col">#</th>
-						<th class="col-2" scope="col">S$</th>
-						<th class="col" scope="col">Notes</th>
-						<th class="col" scope="col">Entry</th>
-					  </tr>
-					</thead>
-					<tbody id="tblBody">
-					</tbody>
-				</table>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                  <th class="col-2" scope="col">#</th>
+                  <th class="col-2" scope="col">S$</th>
+                  <th class="col" scope="col">Notes</th>
+                  <th class="col" scope="col">Entry</th>
+                  </tr>
+                </thead>
+                <tbody id="tblBody">
+                </tbody>
+              </table>
             </div>
         </div>
     </div>
     <div class="container-fluid mt-2 mb-5">
         <div class="row">
-			<div class="col d-grid text-center">
-				<button class="btn btn-danger" onclick="resetDatabase()">
-					Reset Data
-				</button>
-			</div>
+          <div class="col d-grid text-center">
+            <button class="btn btn-danger" onclick="resetDatabase()">
+              Reset Data
+            </button>
+          </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>

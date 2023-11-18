@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>YA! Expense Tracker</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/idb@5.0.2/build/iife/index-min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/object-hash@3.0.0/dist/object_hash.min.js"></script>
+  	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js" integrity="sha256-qXBd/EfAdjOA2FGrGAG+b3YBn2tn5A6bhz+LSgYD96k=" crossorigin="anonymous"></script>
+	  <script src="./script.js"></script>
+	
+    <style>
+      .icon{
+        max-width: 50px
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <div class="col">
+				      <a class="link-opacity-100 fs-4  link-underline link-underline-opacity-0"" href="/index.html">&larr; Back</a>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <div class="col">
+                <div class="mb-3 fs-3 text-center text-success">
+                  Advance Search
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" id="spending_types">
+      <!-- ICON START -->
+      <div class="row mt-2">
+        <div class="col d-grid" style="min-height: 88px">
+          <button class="btn fs-2" role="button" data-bs-toggle="button" onclick="addToSpendType(this, 'breakfast')">
+            <img src="./breakfast.png" class="icon" />
+          </button>
+        </div>
+        <div class="col d-grid" style="min-height: 88px">
+          <button class="btn fs-2" role="button" data-bs-toggle="button" onclick="addToSpendType(this, 'lunch')">
+            <img src="./lunch.png" class="icon" />
+          </button>
+        </div>
+        <div class="col d-grid" style="min-height: 88px">
+          <button class="btn fs-2" role="button" data-bs-toggle="button" onclick="addToSpendType(this, 'dinner')">
+            <img src="./dinner.png" class="icon" />
+          </button>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col d-grid" style="min-height: 88px">
+          <button class="btn fs-2" role="button" data-bs-toggle="button" onclick="addToSpendType(this, 'snack')">
+            <img src="./snack.png" class="icon" />
+          </button>
+        </div>
+        <div class="col d-grid" style="min-height: 88px">
+          <button class="btn fs-2" role="button" data-bs-toggle="button" onclick="addToSpendType(this, 'beverages')">
+            <img src="./beverages.png" class="icon" />
+          </button>
+        </div>
+        <div class="col d-grid" style="min-height: 88px">
+          <button class="btn fs-2" role="button" data-bs-toggle="button" onclick="addToSpendType(this, 'grocery')">
+            <img src="./grocery.png" class="icon" />
+          </button>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col d-grid" style="min-height: 88px">
+          <button class="btn fs-2" role="button" data-bs-toggle="button" onclick="addToSpendType(this, 'public-transport')">
+            <img src="./public-transport.png" class="icon" />
+          </button>
+        </div>
+        <div class="col d-grid" style="min-height: 88px">
+          <button class="btn fs-2" role="button" data-bs-toggle="button" onclick="addToSpendType(this, 'taxi')">
+            <img src="./taxi.png" class="icon" />
+          </button>
+        </div>
+        <div class="col d-grid" style="min-height: 88px">
+          <!-- <button class="btn fs-2" role="button" data-bs-toggle="button" onclick="addToSpendType(this, 'telco')">
+            <img src="./telco.png" class="icon" />
+          </button> -->
+          <button class="btn fs-2" role="button" data-bs-toggle="button" onclick="addToSpendType(this, 'luxury')">
+            <img src="./luxury.png" class="icon" />
+          </button>
+        </div>
+      </div>
+      <div class="row mt-2 mb-5">
+        <div class="col d-grid" style="min-height: 88px">
+          <button class="btn fs-2" role="button" data-bs-toggle="button" onclick="addToSpendType(this, 'lifestyle')">
+            <img src="./lifestyle.png" class="icon" />
+          </button>
+        </div>
+        <div class="col d-grid" style="min-height: 88px">
+          <button class="btn fs-2" role="button" data-bs-toggle="button" onclick="addToSpendType(this, 'bill')">
+            <img src="./bill.png" class="icon" />
+          </button>
+        </div>
+        <div class="col d-grid" style="min-height: 88px">
+          <button class="btn fs-2" role="button" data-bs-toggle="button" onclick="addToSpendType(this, 'medicine')">
+            <img src="./medicine.png" class="icon" />
+          </button>
+        </div>
+      </div>
+      <div class="row mt-2 mb-5">
+        <div class="col d-grid" style="min-height: 88px">
+          <button class="btn fs-2" role="button" data-bs-toggle="button" onclick="addToSpendType(this, 'friend')">
+            <img src="./friend.png" class="icon" />
+          </button>
+        </div>
+        <div class="col d-grid" style="min-height: 88px">
+          <button class="btn fs-2" role="button" data-bs-toggle="button" onclick="addToSpendType(this, 'family')">
+            <img src="./family.png" class="icon" />
+          </button>
+        </div>
+        <div class="col d-grid" style="min-height: 88px">
+          <button class="btn fs-2" role="button" data-bs-toggle="button" onclick="addToSpendType(this, 'couple')">
+            <img src="./couple-colour.png" class="icon" />
+          </button>
+        </div>
+        <div class="col d-grid" style="min-height: 88px">
+          <button class="btn fs-2" role="button" data-bs-toggle="button" onclick="addToSpendType(this, 'office')">
+            <img src="./group.png" class="icon" />
+          </button>
+        </div>
+      </div>
+      <!-- ICON END -->
+    </div>
+    <div class="container-fluid mt-2">
+        <div class="row mt-3">
+            <div class="col table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                  <th class="col-2" scope="col">#</th>
+                  <th class="col-2" scope="col">S$</th>
+                  <th class="col" scope="col">Notes</th>
+                  <th class="col" scope="col">Entry</th>
+                  </tr>
+                </thead>
+                <tbody id="tblBody">
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	  <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js" integrity="sha256-8BDDxChCyYOB80/6VhOpmr7qI5EIDyDPzxsWePPFVfo=" crossorigin="anonymous"></script>
+    
+    <script>
+    </script>
+  </body>
+</html>
