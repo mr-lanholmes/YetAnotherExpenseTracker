@@ -285,6 +285,27 @@ function showDailyExpensesChart(){
     });
     ctx.data.labels = _.map(dailyListGroup, 'label');
     ctx.data.datasets[0].data =  _.map(dailyListGroup, 'sumValue');
+
+    let colorMap = [ ]
+    for (let i = 0; i < ctx.data.labels.length; i++) {
+        let _color = "green"
+        if(ctx.data.datasets[0].data[i] <= 0){
+            _color = "green"
+        }else if(ctx.data.datasets[0].data[i] <= (dailySpendLimit * 0.8)){
+            _color = "green"
+        }else if(ctx.data.datasets[0].data[i] <= (dailySpendLimit)){
+            _color = "orange"
+        }else{
+            _color = "red"
+        }
+
+        colorMap.push(_color);
+    }
+
+    // console.log(colorMap)
+    ctx.data.datasets[0].backgroundColor = colorMap;
+    // console.log(ctx.data.datasets[0])
+
     ctx.update();
 }
 
@@ -300,6 +321,27 @@ function showMonthlyExpensesChart(){
     });
     ctx.data.labels = _.map(monthlyListGroup, 'label');
     ctx.data.datasets[0].data =  _.map(monthlyListGroup, 'sumValue');
+
+    let colorMap = [ ]
+    for (let i = 0; i < ctx.data.labels.length; i++) {
+        let _color = "green"
+        if(dailyValue <= 0){
+            _color = "green"
+        }else if(dailyValue <= (dailySpendLimit * 0.8)){
+            _color = "green"
+        }else if(dailyValue <= (dailySpendLimit)){
+            _color = "yellow"
+        }else{
+            _color = "red"
+        }
+
+        colorMap.push(_color);
+    }
+
+    // console.log(colorMap)
+    ctx.data.datasets[0].backgroundColor = colorMap;
+    // console.log(ctx.data.datasets[0])
+    
     ctx.update();
 }
 
