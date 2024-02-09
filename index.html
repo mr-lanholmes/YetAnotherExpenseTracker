@@ -33,7 +33,7 @@
 		</div>
 		<div class="row mt-5 mb-5">
 			<div class="col text-center text-middle my-auto fs-5">
-				Today: S$ <span id="todaySpending"></span> / S$ 45
+				Today: <b>S$ <span id="todaySpending"></span></b> / S$ 45
 			</div>
 		</div>
 		<div class="row flex-fill">
@@ -223,6 +223,13 @@
 
 	<script>
 		document.getElementById("todaySpending").innerHTML = lsTotalSpendingValueThisDay.toString()
+		if(lsTotalSpendingValueThisDay / 45 > 0.85){
+			if(lsTotalSpendingValueThisDay / 45 > 0.95){
+				document.getElementById("todaySpending").classList.add("text-danger")
+			}else{
+				document.getElementById("todaySpending").classList.add("text-warning")
+			}
+		}
 	</script>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
