@@ -239,12 +239,12 @@
 
 		if(lsTotalSpendingValueThisMonth / howManyDatePastSpendingLimit > 0.85){
 			if(lsTotalSpendingValueThisMonth / howManyDatePastSpendingLimit > 0.95){
-				document.getElementById("todaySpending").classList.toggle("text-danger");
+				document.getElementById("thisMonthSpending").classList.toggle("text-danger");
 			}else{
-				document.getElementById("todaySpending").classList.toggle("text-warning");
+				document.getElementById("thisMonthSpending").classList.toggle("text-warning");
 			}
 		}else{
-			document.getElementById("todaySpending").classList.toggle("text-success");
+			document.getElementById("thisMonthSpending").classList.toggle("text-success");
 		}
 
 		document.getElementById("todaySpending").innerHTML = "S$ " + lsTotalSpendingValueThisDay.toString()
