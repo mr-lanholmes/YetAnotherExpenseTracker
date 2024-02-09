@@ -10,6 +10,90 @@ if (!('indexedDB' in window)) {
     document.getElementsByTagName('body')[0].innerHTML = "This browser doesn't support IndexedDB";
 }
 
+var lsTotalSpendingValueThisYearName = localStorage.getItem("lsTotalSpendingValueThisYearName");
+var lsTotalSpendingValueThisMonthName = localStorage.getItem("lsTotalSpendingValueThisMonthName");
+var lsTotalSpendingValueThisDayName = localStorage.getItem("lsTotalSpendingValueThisDayName");
+
+console.log(lsTotalSpendingValueThisYearName, lsTotalSpendingValueThisMonthName, lsTotalSpendingValueThisDayName)
+
+var todayDate = new Date();
+
+var todayDateYear = todayDate.getFullYear().toString();
+var todayDateMonth = todayDate.getFullYear() + "/" + (todayDate.getMonth() + 1);
+var todayDateDate = todayDate.getFullYear() + "/" + (todayDate.getMonth() + 1) + "/" + todayDate.getDate();
+
+if(lsTotalSpendingValueThisYearName == null){
+    console.log("Refresh lsTotalSpendingValueThisYearName")
+    lsTotalSpendingValueThisYearName = todayDateYear
+    localStorage.setItem("lsTotalSpendingValueThisYearName", lsTotalSpendingValueThisYearName);
+}
+if(lsTotalSpendingValueThisMonthName == null){
+    console.log("Refresh lsTotalSpendingValueThisMonthName")
+    lsTotalSpendingValueThisMonthName = todayDateMonth
+    localStorage.setItem("lsTotalSpendingValueThisMonthName", lsTotalSpendingValueThisMonthName);
+}
+if(lsTotalSpendingValueThisDayName == null){
+    console.log("Refresh lsTotalSpendingValueThisDayName")
+    lsTotalSpendingValueThisDayName = todayDateDate
+    localStorage.setItem("lsTotalSpendingValueThisDayName", lsTotalSpendingValueThisDayName);
+}
+
+console.log(lsTotalSpendingValueThisYearName, lsTotalSpendingValueThisMonthName, lsTotalSpendingValueThisDayName)
+
+var lsTotalSpendingValueThisYear = localStorage.getItem("lsTotalSpendingValueThisYear");
+var lsTotalSpendingValueThisMonth = localStorage.getItem("lsTotalSpendingValueThisMonth");
+var lsTotalSpendingValueThisDay = localStorage.getItem("lsTotalSpendingValueThisDay");
+
+console.log(lsTotalSpendingValueThisYear, lsTotalSpendingValueThisMonth, lsTotalSpendingValueThisDay)
+
+if(lsTotalSpendingValueThisYear == null){
+    console.log("Refresh lsTotalSpendingValueThisYear")
+    lsTotalSpendingValueThisYear = 0
+    localStorage.setItem("lsTotalSpendingValueThisYear", lsTotalSpendingValueThisYear);
+}else{
+    lsTotalSpendingValueThisYear = parseFloat(lsTotalSpendingValueThisYear)
+}
+if(lsTotalSpendingValueThisMonth == null){
+    console.log("Refresh lsTotalSpendingValueThisMonth")
+    lsTotalSpendingValueThisMonth = 0
+    localStorage.setItem("lsTotalSpendingValueThisMonth", lsTotalSpendingValueThisMonth);
+}else{
+    lsTotalSpendingValueThisMonth = parseFloat(lsTotalSpendingValueThisMonth)
+}
+if(lsTotalSpendingValueThisDay == null){
+    console.log("Refresh lsTotalSpendingValueThisDay")
+    lsTotalSpendingValueThisDay = 0
+    localStorage.setItem("lsTotalSpendingValueThisDay", lsTotalSpendingValueThisDay);
+}else{
+    lsTotalSpendingValueThisDay = parseFloat(lsTotalSpendingValueThisDay)
+}
+
+console.log(lsTotalSpendingValueThisYear, lsTotalSpendingValueThisMonth, lsTotalSpendingValueThisDay)
+
+if(todayDateYear != lsTotalSpendingValueThisYearName){
+    lsTotalSpendingValueThisYearName = todayDateYear
+    lsTotalSpendingValueThisYear = 0
+    localStorage.setItem("lsTotalSpendingValueThisYearName", lsTotalSpendingValueThisYearName);
+    localStorage.setItem("lsTotalSpendingValueThisYear", lsTotalSpendingValueThisYear);
+}
+
+if(todayDateMonth != lsTotalSpendingValueThisMonthName){
+    lsTotalSpendingValueThisMonthName = todayDateMonth
+    lsTotalSpendingValueThisMonth = 0
+    localStorage.setItem("lsTotalSpendingValueThisMonthName", lsTotalSpendingValueThisMonthName);
+    localStorage.setItem("lsTotalSpendingValueThisMonth", lsTotalSpendingValueThisMonth);
+}
+
+if(todayDateDate != lsTotalSpendingValueThisDayName){
+    lsTotalSpendingValueThisDayName = todayDateDate
+    lsTotalSpendingValueThisDay = 0
+    localStorage.setItem("lsTotalSpendingValueThisDayName", lsTotalSpendingValueThisDayName);
+    localStorage.setItem("lsTotalSpendingValueThisDay", lsTotalSpendingValueThisDay);
+}
+
+console.log(lsTotalSpendingValueThisYearName, lsTotalSpendingValueThisMonthName, lsTotalSpendingValueThisDayName)
+console.log(lsTotalSpendingValueThisYear, lsTotalSpendingValueThisMonth, lsTotalSpendingValueThisDay)
+
 const dbPromise = idb.openDB(dbName, 1, {
     upgrade(db) {
         const objectStore = db.createObjectStore(dbStoreName, { keyPath: '_id', });
@@ -164,6 +248,13 @@ function addExpenses(multiplier=1) {
         store.add(_expense_entry);
         return tx.complete;
     }).then(() => {
+        lsTotalSpendingValueThisYear += (parseFloat(document.getElementById('display').innerHTML)*multiplier)
+        lsTotalSpendingValueThisMonth += (parseFloat(document.getElementById('display').innerHTML)*multiplier)
+        lsTotalSpendingValueThisDay += (parseFloat(document.getElementById('display').innerHTML)*multiplier)
+
+        localStorage.setItem("lsTotalSpendingValueThisYear", lsTotalSpendingValueThisYear);
+        localStorage.setItem("lsTotalSpendingValueThisMonth", lsTotalSpendingValueThisMonth);
+        localStorage.setItem("lsTotalSpendingValueThisDay", lsTotalSpendingValueThisDay);
         resetForm()
     });
 }
