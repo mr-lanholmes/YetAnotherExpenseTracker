@@ -22,6 +22,11 @@ var todayDateYear = todayDate.getFullYear().toString();
 var todayDateMonth = todayDate.getFullYear() + "/" + (todayDate.getMonth() + 1);
 var todayDateDate = todayDate.getFullYear() + "/" + (todayDate.getMonth() + 1) + "/" + todayDate.getDate();
 
+var howManyDatePast = todayDate.getDate();
+var howManyDatePastSpendingLimit = howManyDatePast * dailySpendLimit;
+
+console.log("===", todayDateDate, howManyDatePast, "x", dailySpendLimit, "=", howManyDatePastSpendingLimit)
+
 if(lsTotalSpendingValueThisYearName == null){
     console.log("Refresh lsTotalSpendingValueThisYearName")
     lsTotalSpendingValueThisYearName = todayDateYear
@@ -71,6 +76,7 @@ if(lsTotalSpendingValueThisDay == null){
 console.log(lsTotalSpendingValueThisYear, lsTotalSpendingValueThisMonth, lsTotalSpendingValueThisDay)
 
 if(todayDateYear != lsTotalSpendingValueThisYearName){
+    console.log("New date, refresh lsTotalSpendingValueThisYearName, lsTotalSpendingValueThisYear")
     lsTotalSpendingValueThisYearName = todayDateYear
     lsTotalSpendingValueThisYear = 0
     localStorage.setItem("lsTotalSpendingValueThisYearName", lsTotalSpendingValueThisYearName);
@@ -78,6 +84,7 @@ if(todayDateYear != lsTotalSpendingValueThisYearName){
 }
 
 if(todayDateMonth != lsTotalSpendingValueThisMonthName){
+    console.log("New date, refresh lsTotalSpendingValueThisMonthName, lsTotalSpendingValueThisMonth")
     lsTotalSpendingValueThisMonthName = todayDateMonth
     lsTotalSpendingValueThisMonth = 0
     localStorage.setItem("lsTotalSpendingValueThisMonthName", lsTotalSpendingValueThisMonthName);
@@ -85,6 +92,7 @@ if(todayDateMonth != lsTotalSpendingValueThisMonthName){
 }
 
 if(todayDateDate != lsTotalSpendingValueThisDayName){
+    console.log("New date, refresh lsTotalSpendingValueThisDayName, lsTotalSpendingValueThisDay")
     lsTotalSpendingValueThisDayName = todayDateDate
     lsTotalSpendingValueThisDay = 0
     localStorage.setItem("lsTotalSpendingValueThisDayName", lsTotalSpendingValueThisDayName);
