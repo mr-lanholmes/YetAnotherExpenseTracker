@@ -263,6 +263,9 @@ function addExpenses(multiplier=1) {
         localStorage.setItem("lsTotalSpendingValueThisYear", lsTotalSpendingValueThisYear);
         localStorage.setItem("lsTotalSpendingValueThisMonth", lsTotalSpendingValueThisMonth);
         localStorage.setItem("lsTotalSpendingValueThisDay", lsTotalSpendingValueThisDay);
+        
+		document.getElementById("todaySpending").innerHTML = "S$ " + lsTotalSpendingValueThisDay.toString()
+        
         resetForm()
     });
 }
