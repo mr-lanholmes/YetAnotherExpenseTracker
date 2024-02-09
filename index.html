@@ -31,6 +31,11 @@
 				0
 			</div>
 		</div>
+		<div class="row mt-5 mb-5">
+			<div class="col text-center text-middle my-auto fs-5">
+				Today Spending is S$ <span id="todaySpending"></span> / S$ 45
+			</div>
+		</div>
 		<div class="row flex-fill">
 			<div class="col fs-1 text-center text-middle my-auto"><span id="displayCcy">S$</span> <span id="display">0</span></div>
 		</div>
@@ -215,6 +220,10 @@
 			</div>
 		</div>
 	</div>
+
+	<script>
+		document.getElementById("todaySpending").innerHTML = lsTotalSpendingValueThisDay.toString()
+	</script>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
