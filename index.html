@@ -42,6 +42,7 @@
 		</div>
 		<div class="row mt-5 mb-5">
 			<div class="col text-center text-middle my-auto fs-5">
+				<small><span id="thisMonthName"></span>: <b><span id="thisMonthSpending"></span></b> / <span id="thisMonthSpendingLimit"></span></small><br>
 				Today: <b><span id="todaySpending"></span></b> / S$ 45
 			</div>
 		</div>
@@ -231,6 +232,21 @@
 	</div>
 
 	<script>
+
+		document.getElementById("thisMonthName").innerHTML = lsTotalSpendingValueThisMonthName
+		document.getElementById("thisMonthSpending").innerHTML = "S$ " + lsTotalSpendingValueThisMonth.toString()
+		document.getElementById("thisMonthSpendingLimit").innerHTML = "S$ " + howManyDatePastSpendingLimit.toString()
+
+		if(lsTotalSpendingValueThisMonth / howManyDatePastSpendingLimit > 0.85){
+			if(lsTotalSpendingValueThisMonth / howManyDatePastSpendingLimit > 0.95){
+				document.getElementById("todaySpending").classList.toggle("text-danger");
+			}else{
+				document.getElementById("todaySpending").classList.toggle("text-warning");
+			}
+		}else{
+			document.getElementById("todaySpending").classList.toggle("text-success");
+		}
+
 		document.getElementById("todaySpending").innerHTML = "S$ " + lsTotalSpendingValueThisDay.toString()
 		if(lsTotalSpendingValueThisDay / 45 > 0.85){
 			if(lsTotalSpendingValueThisDay / 45 > 0.95){
