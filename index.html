@@ -234,8 +234,8 @@
 	<script>
 
 		document.getElementById("thisMonthName").innerHTML = lsTotalSpendingValueThisMonthName
-		document.getElementById("thisMonthSpending").innerHTML = "S$ " + lsTotalSpendingValueThisMonth.toString()
-		document.getElementById("thisMonthSpendingLimit").innerHTML = "S$ " + howManyDatePastSpendingLimit.toString()
+		document.getElementById("thisMonthSpending").innerHTML = "S$ " + Number(lsTotalSpendingValueThisMonth).toLocaleString()
+		document.getElementById("thisMonthSpendingLimit").innerHTML = "S$ " + Number(howManyDatePastSpendingLimit).toLocaleString()
 
 		if(lsTotalSpendingValueThisMonth / howManyDatePastSpendingLimit > 0.85){
 			if(lsTotalSpendingValueThisMonth / howManyDatePastSpendingLimit > 0.95){
@@ -247,7 +247,7 @@
 			document.getElementById("thisMonthSpending").classList.toggle("text-success");
 		}
 
-		document.getElementById("todaySpending").innerHTML = "S$ " + lsTotalSpendingValueThisDay.toString()
+		document.getElementById("todaySpending").innerHTML = "S$ " + Number(lsTotalSpendingValueThisDay).toLocaleString()
 		if(lsTotalSpendingValueThisDay / 45 > 0.85){
 			if(lsTotalSpendingValueThisDay / 45 > 0.95){
 				document.getElementById("todaySpending").classList.toggle("text-danger");
