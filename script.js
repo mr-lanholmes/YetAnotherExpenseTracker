@@ -146,9 +146,16 @@ function displayTasks() {
 
             if(expenseDateStr == todayStr){ 
                 dailyValue += parseFloat(element.expenseValue) 
+
+                lsTotalSpendingValueThisDay = dailyValue
+                localStorage.setItem("lsTotalSpendingValueThisDay", lsTotalSpendingValueThisDay);
             }
             if(todayMm == String(expenseDate.getMonth() + 1).padStart(2, '0')){ 
                 mtdValue += parseFloat(element.expenseValue) 
+                
+                lsTotalSpendingValueThisMonth = mtdValue
+                localStorage.setItem("lsTotalSpendingValueThisMonth", lsTotalSpendingValueThisMonth);
+
                 dailyList.push({
                     label: expenseDateStr.substr(0, 2),
                     dataValue: parseFloat(element.expenseValue)
@@ -156,6 +163,10 @@ function displayTasks() {
             }
             if(todayYyyy == expenseDate.getFullYear()){ 
                 ytdValue += parseFloat(element.expenseValue)
+                
+                lsTotalSpendingValueThisYear = ytdValue
+                localStorage.setItem("lsTotalSpendingValueThisYear", lsTotalSpendingValueThisYear);
+
                 monthlyList.push({
                     label: expenseDateStr.substr(3),
                     dataValue: parseFloat(element.expenseValue)
